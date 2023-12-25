@@ -1,8 +1,8 @@
 import Cookies from "js-cookie";
 
+// Here we are getting the user state data from Cookies(if it exists, otherwise null)
 export function userReducer(
   state = Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null,
-
   action
 ) {
   switch (action.type) {

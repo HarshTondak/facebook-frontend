@@ -17,16 +17,20 @@ export default function SearchMenu({ color, setShowSearchMenu, token }) {
   const menu = useRef(null);
   const input = useRef(null);
 
+  // Hides the SearchMenu on clicking outside it
   useClickOutside(menu, () => {
     setShowSearchMenu(false);
   });
+  // To make the search input field in focus on clicking it once...
   useEffect(() => {
     input.current.focus();
   }, []);
+  // To fetch the searched history as soon as the search input field is accessed...
   useEffect(() => {
     getHistory();
   }, []);
 
+  // Shows the result according to the searched string
   const searchHandler = async () => {
     if (searchTerm === "") {
       setResults("");
@@ -35,15 +39,17 @@ export default function SearchMenu({ color, setShowSearchMenu, token }) {
       setResults(res);
     }
   };
-  // console.log(results);
+  // Update the searched history
   const addToSearchHistoryHandler = async (searchUser) => {
     const res = await addToSearchHistory(searchUser, token);
     getHistory();
   };
+  // Fetches the search history
   const getHistory = async () => {
     const res = await getSearchHistory(token);
     setSearchHistory(res);
   };
+  // Deletes the search history
   const handleRemove = async (searchUser) => {
     removeFromSearch(searchUser, token);
     getHistory();

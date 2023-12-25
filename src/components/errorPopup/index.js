@@ -6,7 +6,10 @@ export default function ErrorPopup() {
   const dispatch = useDispatch();
   const errorPopup = useRef(null);
   const { error } = useSelector((state) => ({ ...state }));
+
+  // Hide the component on clicking outside it
   useClickOutside(errorPopup, () => {});
+
   return (
     <div className="blur" id="errorPopup">
       <div className="postBox" ref={errorPopup} id="erroPost1">

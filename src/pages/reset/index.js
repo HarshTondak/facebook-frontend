@@ -10,6 +10,7 @@ import SendEmail from "./SendEmail";
 import CodeVerification from "./CodeVerification";
 import Footer from "../../components/login/Footer";
 import ChangePassword from "./ChangePassword";
+
 export default function Reset() {
   const { user } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
@@ -22,6 +23,8 @@ export default function Reset() {
   const [conf_password, setConf_password] = useState("");
   const [error, setError] = useState("");
   const [userInfos, setUserInfos] = useState("");
+
+  // Logout functionality
   const logout = () => {
     Cookies.set("user", "");
     dispatch({
@@ -29,11 +32,14 @@ export default function Reset() {
     });
     navigate("/login");
   };
-  console.log(userInfos);
+
+  // console.log(userInfos);
+
   return (
     <div className="reset">
+      {/* Header Portion */}
       <div className="reset_header">
-        <img src="../../../icons/facebook.svg" alt="" />
+        <img src="../../../favicon_io/apple-touch-icon.png" alt="" />
         {user ? (
           <div className="right_reset">
             <Link to="/profile">
@@ -54,7 +60,10 @@ export default function Reset() {
           </Link>
         )}
       </div>
+
+      {/* Main Body */}
       <div className="reset_wrap">
+        {/* First Enter the correct account mail */}
         {visible === 0 && (
           <SearchAccount
             email={email}
@@ -66,6 +75,8 @@ export default function Reset() {
             setVisible={setVisible}
           />
         )}
+
+        {/* Verify the mail and send reset code */}
         {visible === 1 && userInfos && (
           <SendEmail
             email={email}
@@ -77,6 +88,8 @@ export default function Reset() {
             setVisible={setVisible}
           />
         )}
+
+        {/* Enter and Verify the reset code */}
         {visible === 2 && (
           <CodeVerification
             user={user}
@@ -89,6 +102,8 @@ export default function Reset() {
             userInfos={userInfos}
           />
         )}
+
+        {/* Change the pasword */}
         {visible === 3 && (
           <ChangePassword
             password={password}

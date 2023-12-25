@@ -8,7 +8,9 @@ export default function useClickOutside(ref, fun) {
       }
       fun();
     };
+    // mousedown -> When you click the mouse(left/right/middle) button
     document.addEventListener("mousedown", listener);
+    // touchstart -> When you touch the screen
     document.addEventListener("touchstart", listener);
 
     return () => {

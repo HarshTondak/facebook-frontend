@@ -1,4 +1,6 @@
 import axios from "axios";
+
+// Create a Post(of any type: bg-image + text, image + text, or only text)
 export const createPost = async (
   type,
   background,
@@ -28,6 +30,8 @@ export const createPost = async (
     return error.response.data.message;
   }
 };
+
+// Adding reaction to a post
 export const reactPost = async (postId, react, token) => {
   try {
     const { data } = await axios.put(
@@ -47,6 +51,8 @@ export const reactPost = async (postId, react, token) => {
     return error.response.data.message;
   }
 };
+
+// Fetching all reactions of a post
 export const getReacts = async (postId, token) => {
   try {
     const { data } = await axios.get(
@@ -63,6 +69,8 @@ export const getReacts = async (postId, token) => {
     return error.response.data.message;
   }
 };
+
+// Adding comments to a post
 export const comment = async (postId, comment, image, token) => {
   try {
     const { data } = await axios.put(
@@ -84,6 +92,8 @@ export const comment = async (postId, comment, image, token) => {
     return error.response.data.message;
   }
 };
+
+// Bookmarking a post
 export const savePost = async (postId, token) => {
   try {
     const { data } = await axios.put(
@@ -101,6 +111,8 @@ export const savePost = async (postId, token) => {
     return error.response.data.message;
   }
 };
+
+// Deleting a post form database
 export const deletePost = async (postId, token) => {
   try {
     const { data } = await axios.delete(

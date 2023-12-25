@@ -11,6 +11,7 @@ export default function SendEmail({
   loading,
   setLoading,
 }) {
+  // Send the reset password code through email
   const sendEmail = async () => {
     try {
       setLoading(true);
@@ -26,6 +27,7 @@ export default function SendEmail({
       setError(error.response.data.message);
     }
   };
+
   return (
     <div className="reset_form dynamic_height">
       <div className="reset_form_header">Reset Your Password</div>

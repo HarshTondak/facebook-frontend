@@ -16,9 +16,12 @@ export default function EmojiPickerBackgrounds({
   const textRef = useRef(null);
   const bgRef = useRef(null);
 
+  // To make the cursor stay at any position and not reset after adding emojis
   useEffect(() => {
     textRef.current.selectionEnd = cursorPosition;
   }, [cursorPosition]);
+
+  // Adding emogis to the text message in the post
   const handleEmoji = (e, { emoji }) => {
     const ref = textRef.current;
     ref.focus();
@@ -28,6 +31,8 @@ export default function EmojiPickerBackgrounds({
     setText(newText);
     setCursorPosition(start.length + emoji.length);
   };
+
+  // Background Images
   const postBackgrounds = [
     "../../../images/postbackgrounds/1.jpg",
     "../../../images/postbackgrounds/2.jpg",
@@ -39,21 +44,30 @@ export default function EmojiPickerBackgrounds({
     "../../../images/postbackgrounds/8.jpg",
     "../../../images/postbackgrounds/9.jpg",
   ];
+
+  // Setting the bg-image in post
   const backgroundHanlder = (i) => {
     bgRef.current.style.backgroundImage = `url(${postBackgrounds[i]})`;
     setBackground(postBackgrounds[i]);
     bgRef.current.classList.add("bgHandler");
   };
+
+  // Removing the bg-image from post
   const removeBackground = (i) => {
     bgRef.current.style.backgroundImage = "";
     setBackground("");
     bgRef.current.classList.remove("bgHandler");
   };
+
   const sm = useMediaQuery({
     query: "(max-width: 550px)",
   });
+
   return (
+    // "type2" is when you are posting an image
+    // It is used to set the text area correctly for (1)when posting bg-image, and (2)when posting image
     <div className={type2 ? "images_input" : ""}>
+      {/* Text area */}
       <div className={!type2 ? "flex_center" : ""} ref={bgRef}>
         <textarea
           ref={textRef}
@@ -64,6 +78,7 @@ export default function EmojiPickerBackgrounds({
             sm && !background && 10
           }`}
           onChange={(e) => setText(e.target.value)}
+          // Making the text always stay in the center after adding the bg-image
           style={{
             paddingTop: `${
               background
@@ -73,6 +88,8 @@ export default function EmojiPickerBackgrounds({
           }}
         ></textarea>
       </div>
+
+      {/* Main Body */}
       <div className={!type2 ? "post_emojis_wrap" : ""}>
         {picker && (
           <div
@@ -113,6 +130,7 @@ export default function EmojiPickerBackgrounds({
           </div>
         )}
 
+        {/* Emoji Icon */}
         <i
           className={`emoji_icon_large ${type2 ? "moveleft" : ""}`}
           onClick={() => {

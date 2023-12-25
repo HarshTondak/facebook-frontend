@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { reactPost } from "../../functions/post";
 import { useSelector } from "react-redux";
+
+// Types of Reactions
 const reactsArray = [
   {
     name: "like",

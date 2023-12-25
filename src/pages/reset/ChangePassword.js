@@ -16,6 +16,7 @@ export default function ChangePassword({
   setError,
 }) {
   const navigate = useNavigate();
+  // Validate the entered password
   const validatePassword = Yup.object({
     password: Yup.string()
       .required(
@@ -24,11 +25,13 @@ export default function ChangePassword({
       .min(6, "Password must be atleast 6 characters.")
       .max(36, "Password can't be more than 36 characters"),
 
-    conf_password: Yup.string()
+    conf_password: Yup.string() // Checking if password and confirm password, both are same
       .required("Confirm your password.")
       .oneOf([Yup.ref("password")], "Passwords must match."),
   });
+
   const { email } = userInfos;
+  // Change the password for the previously entered mail
   const changePassword = async () => {
     try {
       setLoading(true);
@@ -43,6 +46,7 @@ export default function ChangePassword({
       setError(error.response.data.message);
     }
   };
+
   return (
     <div className="reset_form" style={{ height: "310px" }}>
       <div className="reset_form_header">Change Password</div>

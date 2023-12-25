@@ -10,11 +10,16 @@ export default function ImagePreview({
   setShowPrev,
   setError,
 }) {
+  // Refrence for clickable components to be used to select files from the device
   const imageInputRef = useRef(null);
+
+  // Validating the uploading image's format and its size
   const handleImages = (e) => {
+    // "e.target.files" contains all the photos selected by user for uploading purpose
+    // "Array.from(e.target.files)" converts the FileList object into a regular JS array -> "files"
     let files = Array.from(e.target.files);
+
     files.forEach((img) => {
-      console.log(img);
       if (
         img.type !== "image/jpeg" &&
         img.type !== "image/png" &&
@@ -24,24 +29,35 @@ export default function ImagePreview({
         setError(
           `${img.name} format is unsupported ! only Jpeg, Png, Webp, Gif are allowed.`
         );
+        // Filtering the "files[]" such that it only contains the data items which passes the validation checks.
         files = files.filter((item) => item.name !== img.name);
         return;
       } else if (img.size > 1024 * 1024 * 5) {
         setError(`${img.name} size is too large max 5mb allowed.`);
+        // Filtering the "files[]" such that it only contains the data items which passes the validation checks.
         files = files.filter((item) => item.name !== img.name);
         return;
       } else {
+        // If a file passes the type and size validation checks
+        // It proceeds to read the file's data as a data URL using a "FileReader()"
         const reader = new FileReader();
+        // Reading the file's contents
         reader.readAsDataURL(img);
+        // "onload" event of the "FileReader()" is executed once the file has been read.
         reader.onload = (readerEvent) => {
+          // New image data is added to the existing array of images using the spread operator
           setImages((images) => [...images, readerEvent.target.result]);
         };
       }
     });
   };
+
   return (
     <div className="overflow_a scrollbar">
+      {/* passing the "type2" to set the text area accordingly */}
       <EmojiPickerBackgrounds text={text} user={user} setText={setText} type2 />
+
+      {/* Main body */}
       <div className="add_pics_wrap">
         <input
           type="file"
@@ -61,6 +77,7 @@ export default function ImagePreview({
               <button
                 className="hover1"
                 onClick={() => {
+                  // Opens the file dialog on the user's device, allowing them to select a file.
                   imageInputRef.current.click();
                 }}
               >
@@ -68,6 +85,7 @@ export default function ImagePreview({
                 Add Photos/Videos
               </button>
             </div>
+
             <div
               className="small_white_circle"
               onClick={() => {
@@ -76,6 +94,8 @@ export default function ImagePreview({
             >
               <i className="exit_icon"></i>
             </div>
+
+            {/* Showing the preview of selected images */}
             <div
               className={
                 images.length === 1
@@ -108,9 +128,11 @@ export default function ImagePreview({
             >
               <i className="exit_icon"></i>
             </div>
+
             <div
               className="add_col"
               onClick={() => {
+                // Opens the file dialog on the user's device, allowing them to select a file.
                 imageInputRef.current.click();
               }}
             >
@@ -122,10 +144,12 @@ export default function ImagePreview({
             </div>
           </div>
         )}
+
         <div className="add_pics_inside2">
           <div className="add_circle">
             <i className="phone_icon"></i>
           </div>
+
           <div className="mobile_text">Add phots from your mobile device.</div>
           <span className="addphone_btn">Add</span>
         </div>

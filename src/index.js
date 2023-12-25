@@ -9,9 +9,12 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import rootReducer from "./reducers";
-const store = createStore(rootReducer, composeWithDevTools());
 
+// Creating a Redux Store
+const store = createStore(rootReducer, composeWithDevTools());
+// Renders the React application into the HTML document
 ReactDOM.render(
+  // This provides the Redux store to all components of the application, allowing them to access the application's state
   <Provider store={store}>
     <Router>
       <App />

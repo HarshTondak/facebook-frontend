@@ -20,6 +20,7 @@ import CreatePostPopup from "../../components/createPostPopup";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { HashLoader, ScaleLoader } from "react-spinners";
+
 export default function Profile({ getAllPosts }) {
   const [visible, setVisible] = useState(false);
   const { username } = useParams();
@@ -40,6 +41,7 @@ export default function Profile({ getAllPosts }) {
       mountedRef.current = false;
     };
   }, []);
+
   useEffect(() => {
     getProfile();
   }, [userName]);
@@ -101,6 +103,7 @@ export default function Profile({ getAllPosts }) {
       });
     }
   };
+
   const profileTop = useRef(null);
   const leftSide = useRef(null);
   const [height, setHeight] = useState();
@@ -336,7 +339,7 @@ export default function Profile({ getAllPosts }) {
                   <div className="sekelton_loader">
                     <ScaleLoader
                       color="#a5f"
-                      width="5"
+                      width="5px"
                       cssOverride={{ display: "block" }}
                     />
                   </div>

@@ -2,6 +2,8 @@ import "./style.css";
 import { Link } from "react-router-dom";
 import {
   ArrowDown,
+  Bookmark,
+  BookmarkActive,
   Friends,
   FriendsActive,
   Gaming,
@@ -13,7 +15,6 @@ import {
   Messenger,
   Notifications,
   Search,
-  Watch,
 } from "../../svg";
 import { useSelector } from "react-redux";
 import SearchMenu from "./SearchMenu";
@@ -21,6 +22,7 @@ import { useRef, useState } from "react";
 import AllMenu from "./AllMenu";
 import useClickOutside from "../../helpers/clickOutside";
 import UserMenu from "./userMenu";
+
 export default function Header({ page, getAllPosts }) {
   const { user } = useSelector((user) => ({ ...user }));
   // const color = "#65676b";
@@ -30,6 +32,7 @@ export default function Header({ page, getAllPosts }) {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const allmenu = useRef(null);
   const usermenu = useRef(null);
+
   useClickOutside(allmenu, () => {
     setShowAllMenu(false);
   });
@@ -39,7 +42,9 @@ export default function Header({ page, getAllPosts }) {
 
   return (
     <header>
+      {/* Left section of the header */}
       <div className="header_left">
+        {/* Search input field */}
         <Link to="/" className="header_logo" onClick={() => getAllPosts()}>
           <div className="circle">
             <Logo />
@@ -59,6 +64,8 @@ export default function Header({ page, getAllPosts }) {
           />
         </div>
       </div>
+
+      {/* Showing the Search Menu on clicking the Search input field */}
       {showSearchMenu && (
         <SearchMenu
           color={color}
@@ -66,7 +73,10 @@ export default function Header({ page, getAllPosts }) {
           token={user.token}
         />
       )}
+
+      {/* Middle Section of the header */}
       <div className="header_middle">
+        {/* Home Icon */}
         <Link
           to="/"
           className={`middle_icon ${page === "home" ? "active" : "hover1"}`}
@@ -75,6 +85,7 @@ export default function Header({ page, getAllPosts }) {
           {page === "home" ? <HomeActive /> : <Home color={color} />}
         </Link>
 
+        {/* Friends Icon */}
         <Link
           to="/friends"
           className={`middle_icon ${page === "friends" ? "active" : "hover1"}`}
@@ -82,21 +93,32 @@ export default function Header({ page, getAllPosts }) {
           {page === "friends" ? <FriendsActive /> : <Friends color={color} />}
         </Link>
 
-        <Link to="/" className="middle_icon hover1">
-          <Watch color={color} />
-          <div className="middle_notification">9+</div>
+        {/* Watch Bookmarked Posts Icon */}
+        <Link
+          to="/getAllSavedPosts"
+          className={`middle_icon ${
+            page === "getAllSavedPosts" ? "active" : "hover1"
+          }`}
+        >
+          {page === "savedPosts" ? (
+            <BookmarkActive color={color} />
+          ) : (
+            <Bookmark color={color} />
+          )}
+          <div className="middle_notification">+9</div>
         </Link>
 
         {/* <Link to="/" className="middle_icon hover1">
           <Market color={color} />
         </Link> */}
-
         {/* <Link to="/" className="middle_icon hover1 ">
           <Gaming color={color} />
         </Link> */}
       </div>
 
+      {/* Right Section of the Header */}
       <div className="header_right">
+        {/* Profile Pic */}
         <Link
           to="/profile"
           className={`profile_link hover1 ${
@@ -106,6 +128,7 @@ export default function Header({ page, getAllPosts }) {
           <img src={user?.picture} alt="" />
           <span>{user?.first_name}</span>
         </Link>
+        {/* Multi-Menu Button */}
         <div
           className={`circle_icon hover1 ${showAllMenu && "active_header"}`}
           ref={allmenu}
@@ -119,16 +142,18 @@ export default function Header({ page, getAllPosts }) {
               <Menu />
             </div>
           </div>
-
           {showAllMenu && <AllMenu />}
         </div>
+        {/* Messanger Icon */}
         <div className="circle_icon hover1">
           <Messenger />
         </div>
+        {/* Notification Icon */}
         <div className="circle_icon hover1">
           <Notifications />
           <div className="right_notification">5</div>
         </div>
+        {/* User Options Menu */}
         <div
           className={`circle_icon hover1 ${showUserMenu && "active_header"}`}
           ref={usermenu}
@@ -142,7 +167,6 @@ export default function Header({ page, getAllPosts }) {
               <ArrowDown />
             </div>
           </div>
-
           {showUserMenu && <UserMenu user={user} />}
         </div>
       </div>

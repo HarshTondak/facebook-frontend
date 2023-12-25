@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import LoginInput from "../../components/inputs/loginInput";
 import * as Yup from "yup";
 import axios from "axios";
+
 export default function SearchAccount({
   email,
   setEmail,
@@ -13,16 +14,18 @@ export default function SearchAccount({
   setUserInfos,
   setVisible,
 }) {
+  // Validating the email entered by user
   const validateEmail = Yup.object({
     email: Yup.string()
       .required("Email address ir required.")
       .email("Must be a valid email address.")
       .max(50, "Email address can't be more than 50 characters."),
   });
+
+  // Finding the user having the entered email
   const handleSearch = async () => {
     try {
       setLoading(true);
-
       const { data } = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/findUser`,
         { email }
@@ -36,6 +39,7 @@ export default function SearchAccount({
       setError(error.response.data.message);
     }
   };
+
   return (
     <div className="reset_form">
       <div className="reset_form_header">Find Your Account</div>

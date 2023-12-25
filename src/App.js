@@ -12,6 +12,7 @@ import { useEffect, useReducer, useState } from "react";
 import axios from "axios";
 import { postsReducer } from "./functions/reducers";
 import Friends from "./pages/friends";
+import SavedPosts from "./pages/savedPosts";
 
 function App() {
   const [visible, setVisible] = useState(false);
@@ -21,10 +22,11 @@ function App() {
     posts: [],
     error: "",
   });
+
   useEffect(() => {
     if (user) getAllPosts();
-    // console.log(user);
   }, [user, dispatch]);
+
   const getAllPosts = async () => {
     try {
       // IF Condition is added to remove the error while loging-in for the first time OR for a new register id...
@@ -52,6 +54,7 @@ function App() {
       });
     }
   };
+
   return (
     <div className={darkTheme ? "dark" : ""}>
       {visible && (
@@ -63,6 +66,7 @@ function App() {
         />
       )}
       <Routes>
+        {/* Routes for Logged-In users */}
         <Route element={<LoggedInRoutes />}>
           <Route
             path="/profile"
@@ -92,6 +96,7 @@ function App() {
             }
             exact
           />
+          <Route path="/getAllSavedPosts" element={<SavedPosts />} exact />
           <Route
             path="/"
             element={
@@ -106,6 +111,7 @@ function App() {
           />
           <Route path="/activate/:token" element={<Activate />} exact />
         </Route>
+        {/* Routes for Logged-Out users */}
         <Route element={<NotLoggedInRoutes />}>
           <Route path="/login" element={<Login />} exact />
         </Route>

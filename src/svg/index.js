@@ -21,6 +21,8 @@ import Public from "./public";
 import NewRoom from "./newRoom";
 import Home from "./home";
 import FriendsActive from "./friendsActive";
+import Bookmark from "./bookmark";
+import BookmarkActive from "./bookmarkActive";
 
 export {
   Logo,
@@ -46,4 +48,6 @@ export {
   NewRoom,
   Home,
   FriendsActive,
+  Bookmark,
+  BookmarkActive,
 };

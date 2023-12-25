@@ -5,21 +5,27 @@ import HelpSupport from "./HelpSupport";
 import SettingsPrivacy from "./SettingsPrivacy";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
+
 export default function UserMenu({ user }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [visible, setVisible] = useState(0);
+
+  // Logs out the user
   const logout = () => {
+    // Resets the user state values
     Cookies.set("user", "");
     dispatch({
       type: "LOGOUT",
     });
     navigate("/login");
   };
+
   return (
     <div className="mmenu">
       {visible === 0 && (
         <div>
+          {/* User Profile Info */}
           <Link to="/profile" className="mmenu_header hover3">
             <img src={user?.picture} alt="" />
             <div className="mmenu_col">
@@ -29,6 +35,8 @@ export default function UserMenu({ user }) {
               <span>See your profile</span>
             </div>
           </Link>
+
+          {/* Feedback Section */}
           <div className="mmenu_splitter"></div>
           <div className="mmenu_main hover3">
             <div className="small_circle">
@@ -40,6 +48,8 @@ export default function UserMenu({ user }) {
             </div>
           </div>
           <div className="mmenu_splitter"></div>
+
+          {/* Settings & Privacy Menu */}
           <div
             className="mmenu_item hover3"
             onClick={() => {
@@ -54,6 +64,8 @@ export default function UserMenu({ user }) {
               <i className="right_icon"></i>
             </div>
           </div>
+
+          {/* Help & Support Menu */}
           <div
             className="mmenu_item hover3"
             onClick={() => {
@@ -68,6 +80,8 @@ export default function UserMenu({ user }) {
               <i className="right_icon"></i>
             </div>
           </div>
+
+          {/* Display & Accessibility Menu */}
           <div
             className="mmenu_item hover3"
             onClick={() => {
@@ -82,6 +96,8 @@ export default function UserMenu({ user }) {
               <i className="right_icon"></i>
             </div>
           </div>
+
+          {/* LogOut Button */}
           <div
             className="mmenu_item hover3"
             onClick={() => {
@@ -95,8 +111,11 @@ export default function UserMenu({ user }) {
           </div>
         </div>
       )}
+      {/* Shows the Settings and Privacy Menu */}
       {visible === 1 && <SettingsPrivacy setVisible={setVisible} />}
+      {/* Shows the Help and Support Menu */}
       {visible === 2 && <HelpSupport setVisible={setVisible} />}
+      {/* Shows the Display and Accessibility Menu */}
       {visible === 3 && <DisplayAccessibility setVisible={setVisible} />}
     </div>
   );

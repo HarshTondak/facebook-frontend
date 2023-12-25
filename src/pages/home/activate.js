@@ -10,6 +10,7 @@ import ActivateForm from "./ActivateForm";
 import "./style.css";
 import axios from "axios";
 import Cookies from "js-cookie";
+
 export default function Activate() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -17,13 +18,19 @@ export default function Activate() {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+
+  // Getting the token from the params in URL
   const { token } = useParams();
+
+  // Runs the function as soon as the page loads
   useEffect(() => {
     activateAccount();
   }, []);
+
   const activateAccount = async () => {
     try {
       setLoading(true);
+      // Sending the token from URL to backend for verification...
       const { data } = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/activate`,
         { token },
@@ -34,24 +41,30 @@ export default function Activate() {
         }
       );
       setSuccess(data.message);
+      // Updating the verified status in Cookies
       Cookies.set("user", JSON.stringify({ ...user, verified: true }));
+      // Updating the verified status in Redux Store
       dispatch({
         type: "VERIFY",
         payload: true,
       });
-
+      // After 3 seconds navigate to Home
       setTimeout(() => {
         navigate("/");
       }, 3000);
     } catch (error) {
       setError(error.response.data.message);
+      // After 3 seconds navigate to Home
       setTimeout(() => {
         navigate("/");
       }, 3000);
     }
   };
+
+  // This Component is excatly same as the Home component with only 1 difference
   return (
     <div className="home">
+      {/* The difference is ActivateForm Component */}
       {success && (
         <ActivateForm
           type="success"
@@ -68,6 +81,7 @@ export default function Activate() {
           loading={loading}
         />
       )}
+      {/* Everything from here is same as Home Component */}
       <Header />
       <LeftHome user={user} />
       <div className="home_middle">

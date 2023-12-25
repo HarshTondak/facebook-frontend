@@ -1,6 +1,7 @@
 import "./style.css";
 import { useField, ErrorMessage } from "formik";
 import { useMediaQuery } from "react-responsive";
+
 export default function LoginInput({ placeholder, bottom, ...props }) {
   const [field, meta] = useField(props);
   const desktopView = useMediaQuery({
@@ -12,6 +13,7 @@ export default function LoginInput({ placeholder, bottom, ...props }) {
 
   return (
     <div className="input_wrap">
+      {/* Error message shown on top of input */}
       {meta.touched && meta.error && !bottom && (
         <div
           className={
@@ -31,6 +33,7 @@ export default function LoginInput({ placeholder, bottom, ...props }) {
           )}
         </div>
       )}
+      {/* Input Field */}
       <input
         className={meta.touched && meta.error ? "input_error_border" : ""}
         type={field.type}
@@ -39,6 +42,7 @@ export default function LoginInput({ placeholder, bottom, ...props }) {
         {...field}
         {...props}
       />
+      {/* Error message shown in bottom of field */}
       {meta.touched && meta.error && bottom && (
         <div
           className={
@@ -62,7 +66,7 @@ export default function LoginInput({ placeholder, bottom, ...props }) {
           )}
         </div>
       )}
-
+      {/* Error icon */}
       {meta.touched && meta.error && (
         <i
           className="error_icon"

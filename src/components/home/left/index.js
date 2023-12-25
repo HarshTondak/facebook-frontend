@@ -5,16 +5,21 @@ import { Link } from "react-router-dom";
 import { ArrowDown1 } from "../../../svg";
 import { useState } from "react";
 import Shortcut from "./Shortcut";
+
 export default function LeftHome({ user }) {
   const [visible, setVisible] = useState(false);
+
   return (
     <div className="left_home scrollbar">
+      {/* User Info */}
       <Link to="/profile" className="left_link hover2">
         <img src={user?.picture} alt="" />
         <span>
           {user?.first_name} {user.last_name}
         </span>
       </Link>
+
+      {/* Showing 1st 8 links */}
       {left.slice(0, 8).map((link, i) => (
         <LeftLink
           key={i}
@@ -23,6 +28,8 @@ export default function LeftHome({ user }) {
           notification={link.notification}
         />
       ))}
+
+      {/* Show More Button */}
       {!visible && (
         <div
           className="left_link hover2"
@@ -36,6 +43,8 @@ export default function LeftHome({ user }) {
           <span>See more</span>
         </div>
       )}
+
+      {/* On Clicking Show More Button we show rest of the links */}
       {visible && (
         <div className="more_left">
           {left.slice(8, left.length).map((link, i) => (
@@ -59,6 +68,8 @@ export default function LeftHome({ user }) {
           </div>
         </div>
       )}
+
+      {/* Bottom Portion */}
       <div className="splitter"></div>
       <div className="shortcut">
         <div className="heading">Your Shortcuts</div>

@@ -3,7 +3,9 @@ import "./style.css";
 import { stories } from "../../../data/home";
 import Story from "./Story";
 import { useMediaQuery } from "react-responsive";
+
 export default function Stories() {
+  // Break-Points
   const query1175px = useMediaQuery({
     query: "(max-width: 1175px)",
   });
@@ -16,6 +18,8 @@ export default function Stories() {
   const query885px = useMediaQuery({
     query: "(max-width: 885px)",
   });
+
+  // Number of stories to be shown
   const max = query885px
     ? 5
     : query960px
@@ -25,6 +29,7 @@ export default function Stories() {
     : query1175px
     ? 4
     : stories.length;
+
   return (
     <div className="stories">
       <div className="create_story_card">
@@ -41,6 +46,7 @@ export default function Stories() {
       {stories.slice(0, max).map((story, i) => (
         <Story story={story} key={i} />
       ))}
+
       <div className="white_circle">
         <ArrowRight color="#65676b" />
       </div>

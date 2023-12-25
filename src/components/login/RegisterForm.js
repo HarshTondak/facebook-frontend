@@ -9,9 +9,11 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+
 export default function RegisterForm({ setVisible }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // Initial form values
   const userInfos = {
     first_name: "",
     last_name: "",
@@ -22,6 +24,7 @@ export default function RegisterForm({ setVisible }) {
     bDay: new Date().getDate(),
     gender: "",
   };
+
   const [user, setUser] = useState(userInfos);
   const {
     first_name,
@@ -33,17 +36,27 @@ export default function RegisterForm({ setVisible }) {
     bDay,
     gender,
   } = user;
+
   const yearTemp = new Date().getFullYear();
+
+  // Handles the changes made in the input fields
   const handleRegisterChange = (e) => {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
   };
-  const years = Array.from(new Array(108), (val, index) => yearTemp - index);
+
+  // Setting the range of years
+  const years = Array.from(new Array(100), (val, index) => yearTemp - index);
+  // Setting the range of months
   const months = Array.from(new Array(12), (val, index) => 1 + index);
+  // Calculating the number of days in a month of a given year
   const getDays = () => {
     return new Date(bYear, bMonth, 0).getDate();
   };
+  // Setting the range of days
   const days = Array.from(new Array(getDays()), (val, index) => 1 + index);
+
+  // Showing Error messages during invalid inputs using YUP
   const registerValidation = Yup.object({
     first_name: Yup.string()
       .required("What's your First name ?")
@@ -74,8 +87,10 @@ export default function RegisterForm({ setVisible }) {
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Sending values to the database
   const registerSubmit = async () => {
     try {
+      // setLoading(true);
       const { data } = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/register`,
         {
@@ -91,10 +106,13 @@ export default function RegisterForm({ setVisible }) {
       );
       setError("");
       setSuccess(data.message);
+      // Storing all data into rest except the message...
       const { message, ...rest } = data;
       setTimeout(() => {
         dispatch({ type: "LOGIN", payload: rest });
+        // Using cookies to set the user state
         Cookies.set("user", JSON.stringify(rest));
+        // Naviagte to homepage
         navigate("/");
       }, 2000);
     } catch (error) {
@@ -129,6 +147,7 @@ export default function RegisterForm({ setVisible }) {
             let picked_date = new Date(bYear, bMonth - 1, bDay);
             let atleast14 = new Date(1970 + 14, 0, 1);
             let noMoreThan70 = new Date(1970 + 70, 0, 1);
+            // Check for age [14 <= age <= 70] (start year is taken 1970)
             if (current_date - picked_date < atleast14) {
               setDateError(
                 "it looks like you(ve enetered the wrong info.Please make sure that you use your real date of birth."
@@ -215,8 +234,11 @@ export default function RegisterForm({ setVisible }) {
               <div className="reg_btn_wrapper">
                 <button className="blue_btn open_signup">Sign Up</button>
               </div>
+              {/* Spinner Loader */}
               <DotLoader color="#1876f2" loading={loading} size={30} />
+              {/* Error Message */}
               {error && <div className="error_text">{error}</div>}
+              {/* Success Message */}
               {success && <div className="success_text">{success}</div>}
             </Form>
           )}

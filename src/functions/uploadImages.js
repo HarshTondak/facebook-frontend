@@ -1,5 +1,6 @@
 import axios from "axios";
 
+// Uploading image to the DataBase and Cloudinary
 export const uploadImages = async (formData, path, token) => {
   try {
     const { data } = await axios.post(

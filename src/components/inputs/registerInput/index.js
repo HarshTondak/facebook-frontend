@@ -1,8 +1,11 @@
 import "./style.css";
 import { useField, ErrorMessage } from "formik";
 import { useMediaQuery } from "react-responsive";
+
 export default function RegisterInput({ placeholder, bottom, ...props }) {
   const [field, meta] = useField(props);
+
+  // Breakpoints to handle input fields positions
   const view1 = useMediaQuery({
     query: "(min-width: 539px)",
   });
@@ -14,6 +17,7 @@ export default function RegisterInput({ placeholder, bottom, ...props }) {
   });
   const test1 = view3 && field.name === "first_name";
   const test2 = view3 && field.name === "last_name";
+
   return (
     <div className="input_wrap register_input_wrap">
       <input
@@ -33,6 +37,7 @@ export default function RegisterInput({ placeholder, bottom, ...props }) {
         {...field}
         {...props}
       />
+      {/* Error message shown */}
       {meta.touched && meta.error && (
         <div
           className={view3 ? "input_error input_error_desktop" : "input_error"}
@@ -55,7 +60,7 @@ export default function RegisterInput({ placeholder, bottom, ...props }) {
           )}
         </div>
       )}
-
+      {/* Error icon */}
       {meta.touched && meta.error && <i className="error_icon"></i>}
     </div>
   );

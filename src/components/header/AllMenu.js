@@ -2,11 +2,13 @@ import { useRef } from "react";
 import { menu, create } from "../../data/allMenu";
 import useClickOutside from "../../helpers/clickOutside";
 import AllMenuItem from "./AllMenuItem";
+
 export default function AllMenu() {
   return (
     <div className="all_menu">
       <div className="all_menu_header">Menu</div>
       <div className="all_menu_wrap scrollbar">
+        {/* Left Side */}
         <div className="all_left">
           <div className="all_menu_search">
             <i className="amm_s_ic"></i>
@@ -79,6 +81,7 @@ export default function AllMenu() {
             ))}
           </div>
         </div>
+        {/* Right Side */}
         <div className="all_right">
           <div className="all_right_header">Create</div>
           {create.map((item, i) => (

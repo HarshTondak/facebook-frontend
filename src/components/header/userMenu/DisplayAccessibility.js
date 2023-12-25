@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function DisplayAccessibility({ setVisible }) {
   const { darkTheme } = useSelector((state) => ({ ...state }));
-
   const dispatch = useDispatch();
+
   return (
     <div className="absolute_wrap">
       <div className="absolute_wrap_header">
@@ -18,6 +18,7 @@ export default function DisplayAccessibility({ setVisible }) {
         </div>
         Display & Accessibility
       </div>
+
       <div className="mmenu_main">
         <div className="small_circle" style={{ width: "50px" }}>
           <i className="dark_filled_icon"></i>
@@ -25,11 +26,12 @@ export default function DisplayAccessibility({ setVisible }) {
         <div className="mmenu_col">
           <span className="mmenu_span1">Dark Mode</span>
           <span className="mmenu_span2">
-            Adjust the appearance of Facebook to reduce glare and give your eyes
+            Adjust the appearance of Snapbook to reduce glare and give your eyes
             a break.
           </span>
         </div>
       </div>
+      {/* Setting Dark Mode OFF */}
       <label
         htmlFor="darkOff"
         className="hover1"
@@ -45,6 +47,7 @@ export default function DisplayAccessibility({ setVisible }) {
           <input type="radio" name="dark" id="darkOff" checked />
         )}
       </label>
+      {/* Setting Dark Mode ON */}
       <label
         htmlFor="darkOn"
         className="hover1"
@@ -60,6 +63,7 @@ export default function DisplayAccessibility({ setVisible }) {
           <input type="radio" name="dark" id="darkOn" />
         )}
       </label>
+
       <div className="mmenu_main">
         <div className="small_circle" style={{ width: "50px" }}>
           <i className="compact_icon"></i>
@@ -79,6 +83,7 @@ export default function DisplayAccessibility({ setVisible }) {
         <span>On</span>
         <input type="radio" name="compact" id="compactOn" />
       </label>
+
       <div className="mmenu_item hover3">
         <div className="small_circle">
           <i className="keyboard_icon"></i>

@@ -26,11 +26,16 @@ export default function CreatePostPopup({
   const [error, setError] = useState("");
   const [images, setImages] = useState([]);
   const [background, setBackground] = useState("");
+
   useClickOutside(popup, () => {
     setVisible(false);
   });
+
+  // Submitting the posts to database
   const postSubmit = async () => {
     if (background) {
+      // When post includes bg-image and text.....................................
+
       setLoading(true);
       const response = await createPost(
         null,
@@ -53,18 +58,25 @@ export default function CreatePostPopup({
         setError(response);
       }
     } else if (images && images.length) {
+      // When post includes image and text........................................
+
       setLoading(true);
+      // Coverting Data URIs into BLOBs(binary large objects)
       const postImages = images.map((img) => {
         return dataURItoBlob(img);
       });
+      // Specifying the path
       const path = `${user.username}/post_images`;
+      // "FormData()" used for sending data(files) in HTTP requests
       let formData = new FormData();
+      // The "append" method of the "FormData()" is used to add key-value pairs to the formdata.
       formData.append("path", path);
       postImages.forEach((image) => {
         formData.append("file", image);
       });
+      // Uploading Image to database and cloudinary
       const response = await uploadImages(formData, path, user.token);
-
+      // Creating a post in database
       const res = await createPost(
         null,
         null,
@@ -86,6 +98,8 @@ export default function CreatePostPopup({
         setError(res);
       }
     } else if (text) {
+      // When post includes only text.............................................
+
       setLoading(true);
       const response = await createPost(
         null,
@@ -108,13 +122,18 @@ export default function CreatePostPopup({
         setError(response);
       }
     } else {
+      // When post includes nothing...............................................
       console.log("nothing");
     }
   };
+
   return (
     <div className="blur">
       <div className="postBox" ref={popup}>
+        {/* Showing the error (if any) */}
         {error && <PostError error={error} setError={setError} />}
+
+        {/* Header Portion */}
         <div className="box_header">
           <div
             className="small_circle"
@@ -126,6 +145,8 @@ export default function CreatePostPopup({
           </div>
           <span>Create Post</span>
         </div>
+
+        {/* Current User Info */}
         <div className="box_profile">
           <img src={user.picture} alt="" className="box_profile_img" />
           <div className="box_col">
@@ -140,6 +161,7 @@ export default function CreatePostPopup({
           </div>
         </div>
 
+        {/* Main Portion */}
         {!showPrev ? (
           <>
             <EmojiPickerBackgrounds
@@ -164,6 +186,8 @@ export default function CreatePostPopup({
           />
         )}
         <AddToYourPost setShowPrev={setShowPrev} />
+
+        {/* Submit Button */}
         <button
           className="post_submit"
           onClick={() => {

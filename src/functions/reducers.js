@@ -16,6 +16,27 @@ export function postsReducer(state, action) {
       return state;
   }
 }
+
+export function savedPostsReducer(state, action) {
+  switch (action.type) {
+    case "SAVED_POSTS_REQUEST":
+      return { ...state, loading: true, error: "" };
+    case "SAVED_POSTS_SUCCESS":
+      const filteredPosts = action.payload.filter((post) => post !== null);
+      return {
+        ...state,
+        loading: false,
+        posts: filteredPosts,
+        error: "",
+      };
+    case "SAVED_POSTS_ERROR":
+      return { ...state, loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+}
+
 export function profileReducer(state, action) {
   switch (action.type) {
     case "PROFILE_REQUEST":
@@ -40,6 +61,7 @@ export function profileReducer(state, action) {
       return state;
   }
 }
+
 export function photosReducer(state, action) {
   switch (action.type) {
     case "PHOTOS_REQUEST":
@@ -58,6 +80,7 @@ export function photosReducer(state, action) {
       return state;
   }
 }
+
 export function friendspage(state, action) {
   switch (action.type) {
     case "FRIENDS_REQUEST":

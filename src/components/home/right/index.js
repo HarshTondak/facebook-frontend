@@ -4,7 +4,9 @@ import Contact from "./Contact";
 import { friendspage } from "../../../functions/reducers";
 import { getFriendsPageInfos } from "../../../functions/user";
 import "./style.css";
+
 export default function RightHome({ user }) {
+  // Getting the data to load all the friends of the logged in user
   const [{ loading, error, data }, dispatch] = useReducer(friendspage, {
     loading: false,
     data: {},
@@ -18,7 +20,7 @@ export default function RightHome({ user }) {
   const getData = async () => {
     dispatch({ type: "FRIENDS_REQUEST" });
     const data = await getFriendsPageInfos(user.token);
-    if (data.status === "ok") {
+    if (data?.status === "ok") {
       dispatch({ type: "FRIENDS_SUCCESS", payload: data.data });
     } else {
       dispatch({ type: "FRIENDS_ERROR", payload: data.data });

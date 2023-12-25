@@ -26,17 +26,24 @@ export default function Home({ setVisible, posts, loading, getAllPosts }) {
 
   return (
     <div className="home" style={{ height: `${height + 150}px` }}>
+      {/* Header Portion */}
       <Header page="home" getAllPosts={getAllPosts} />
 
+      {/* Left Portion of main page */}
       <LeftHome user={user} />
 
+      {/* Mid Portion of main page */}
       <div className="home_middle" ref={middle}>
+        {/* Stories Section */}
         <Stories />
 
+        {/* Account Verification Message Section */}
         {user.verified === false && <SendVerification user={user} />}
 
+        {/* Create Post Section */}
         <CreatePost user={user} setVisible={setVisible} />
 
+        {/* Show the Posts Section */}
         {loading ? (
           <div className="sekelton_loader">
             <GridLoader color="#a5f" />
@@ -49,6 +56,8 @@ export default function Home({ setVisible, posts, loading, getAllPosts }) {
           </div>
         )}
       </div>
+
+      {/* Right Portion of main page */}
       <RightHome user={user} />
     </div>
   );
