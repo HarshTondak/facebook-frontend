@@ -60,14 +60,14 @@ export default function SavedPosts({}) {
   return (
     <>
       <Header page="savedPosts" />
-      <div className="friends">
-        <div className="friends_left">
-          <div className="friends_left_header">
+      <div className="saved">
+        <div className="saved_left">
+          <div className="saved_left_header">
             <h3>Saved Posts</h3>
           </div>
         </div>
 
-        <div className="friends_right" style={{ height: `${height + 150}px` }}>
+        <div className="saved_right" style={{ height: `${height + 150}px` }}>
           {loading ? (
             <div className="sekelton_loader">
               <GridLoader color="#a5f" />
@@ -79,7 +79,7 @@ export default function SavedPosts({}) {
                   <Post key={i} post={post} user={user} />
                 ))
               ) : (
-                <h3>No Bookmarks Yet...</h3>
+                <h3>No Saved Posts Yet...</h3>
               )}
             </div>
           )}

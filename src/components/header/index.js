@@ -6,11 +6,9 @@ import {
   BookmarkActive,
   Friends,
   FriendsActive,
-  Gaming,
   Home,
   HomeActive,
   Logo,
-  Market,
   Menu,
   Messenger,
   Notifications,
@@ -107,13 +105,6 @@ export default function Header({ page, getAllPosts }) {
           )}
           <div className="middle_notification">+9</div>
         </Link>
-
-        {/* <Link to="/" className="middle_icon hover1">
-          <Market color={color} />
-        </Link> */}
-        {/* <Link to="/" className="middle_icon hover1 ">
-          <Gaming color={color} />
-        </Link> */}
       </div>
 
       {/* Right Section of the Header */}

@@ -1,70 +1,103 @@
-# Getting Started with Create React App
+# SnapBook
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Tech Stack Used:
 
-## Available Scripts
+`For Frontend -` HTML, CSS, JavaScript, React.js
 
-In the project directory, you can run:
+`For Backend -` Node.js, Express.js
 
-### `npm start`
+`Database -` MongoDB
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+• SnapBook a social media platform for real‑time microblogging and communication. It enables users to share their thoughts, which can include text, images, links, and gifs.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+• Users can personalize their profiles with Bio and curated galleries.
 
-### `npm test`
+• Users can socialize with each other through the features of friends and followers.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+• Users can also express their opinions through comments and reactions.
 
-### `npm run build`
+• Cloudinary is used to store the uploaded images seamlessly.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Entity Relationship Diagram:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![Schema](public/schema.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+`User Entity Relationships:`
 
-### `npm run eject`
+- One-to-Many Relationship:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+  - User has many Post entities (via fields savedPosts).
+  - User has many React entities (via fields friends, following, followers, requests).
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Many-to-Many Relationship:
+  - User can have many User entities as friends (via field friends), and a User can be a friend to many other User entities.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+`Post Entity Relationships:`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Many-to-One Relationship:
 
-## Learn More
+  - Posts belongs to one User (via field user).
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- One-to-Many Relationship:
+  - Post can have many React entities (via field comments).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+`React Entity Relationships:`
 
-### Code Splitting
+- Many-to-One Relationships:
+  - React belongs to one User (via field reactBy).
+  - React belongs to one Post (via field postRef).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Installation
 
-### Analyzing the Bundle Size
+Install my-project with npm
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+For Backend:
 
-### Making a Progressive Web App
+```bash
+$ cd backend   // go to server folder
+$ npm i       // npm install packages
+$ npm run server // run it locally
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+For Frontend:
 
-### Advanced Configuration
+```bash
+$ cd frontend   // go to client folder
+$ npm i       // npm install packages
+$ npm start // run it locally
+$ npm run build // this will build the server code to es5 js codes and generate a dist file
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Environment Variables
 
-### Deployment
+To run this project, you will need to add the following environment variables to your .env file
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+`DATABASE_URL` MongoDB Database URL
 
-### `npm run build` fails to minify
+`BASE_URL` Frontend URL
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+`EMAIL` Company mail id
+
+`TOKEN_SECRET` JWT Secret
+
+Cloudinary Variables for Profile Picture Storage
+`CLOUD_NAME`
+`CLOUD_API_KEY`
+`CLOUD_API_SECRET`
+
+Stripe Variable
+`STRIPE_SECRET_KEY`
+
+For Frontend:
+`REACT_APP_BACKEND_URL` Backend URL
+
+## Deployment
+
+- Backend is deployed on `Render`.
+
+- Frontend is deployed on `Netlify`.
+
+## DEMO VIDEO
+
+Hosted link :
+https://snap-book.netlify.app/
