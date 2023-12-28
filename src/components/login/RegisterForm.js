@@ -56,6 +56,11 @@ export default function RegisterForm({ setVisible }) {
   // Setting the range of days
   const days = Array.from(new Array(getDays()), (val, index) => 1 + index);
 
+  // Password Validation
+  // min 8 characters, 1 upper case letter, 1 lower case letter, 1 numeric digit.
+  const passwordRules =
+    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()-_=+{};:'",.<>?/\\[\]|]).{8,}$/;
+
   // Showing Error messages during invalid inputs using YUP
   const registerValidation = Yup.object({
     first_name: Yup.string()
@@ -77,9 +82,11 @@ export default function RegisterForm({ setVisible }) {
       .required(
         "Enter a combination of at least six numbers,letters and punctuation marks(such as ! and &)."
       )
-      .min(6, "Password must be atleast 6 characters.")
-      .max(36, "Password can't be more than 36 characters"),
+      .min(8, "Password must be atleast 8 characters.")
+      .max(36, "Password can't be more than 36 characters")
+      .matches(passwordRules, "Please create a stronger password"),
   });
+
   const [dateError, setDateError] = useState("");
   const [genderError, setGenderError] = useState("");
 
@@ -145,17 +152,24 @@ export default function RegisterForm({ setVisible }) {
           onSubmit={() => {
             let current_date = new Date();
             let picked_date = new Date(bYear, bMonth - 1, bDay);
-            let atleast14 = new Date(1970 + 14, 0, 1);
-            let noMoreThan70 = new Date(1970 + 70, 0, 1);
-            // Check for age [14 <= age <= 70] (start year is taken 1970)
-            if (current_date - picked_date < atleast14) {
-              setDateError(
-                "it looks like you(ve enetered the wrong info.Please make sure that you use your real date of birth."
-              );
-            } else if (current_date - picked_date > noMoreThan70) {
-              setDateError(
-                "it looks like you(ve enetered the wrong info.Please make sure that you use your real date of birth."
-              );
+
+            const atleast14 = new Date(
+              picked_date.getFullYear() + 14,
+              picked_date.getMonth(),
+              picked_date.getDate()
+            );
+            const noMoreThan90 = new Date(
+              picked_date.getFullYear() + 90,
+              picked_date.getMonth(),
+              picked_date.getDate()
+            );
+
+            if (current_date < atleast14) {
+              setDateError("It looks like you've enetered the wrong DOB.");
+              setGenderError("");
+            } else if (current_date > noMoreThan90) {
+              setDateError("It looks like you've enetered the wrong DOB.");
+              setGenderError("");
             } else if (gender === "") {
               setDateError("");
               setGenderError(

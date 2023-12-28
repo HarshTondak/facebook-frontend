@@ -85,9 +85,6 @@ Cloudinary Variables for Profile Picture Storage
 `CLOUD_API_KEY`
 `CLOUD_API_SECRET`
 
-Stripe Variable
-`STRIPE_SECRET_KEY`
-
 For Frontend:
 `REACT_APP_BACKEND_URL` Backend URL
 
